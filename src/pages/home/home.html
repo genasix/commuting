@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item *ngFor="let item of items | async">
+    {{item | json}}
+  </ion-item>
+
+  <button ion-button color="secondary" (click)="login()">login</button>
+  <button ion-button color="danger" (click)="logout()">logout</button>
+
+</ion-content>
