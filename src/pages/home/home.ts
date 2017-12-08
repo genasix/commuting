@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { Observable } from 'rxjs/Observable';
+import * as firebase from 'firebase';
+import { UserManagerService } from '../../app/service/UserManagerService';
 
-import {AngularFireDatabase} from 'angularfire2/database';
-import {Observable} from 'rxjs/Observable';
-import * as firebase from "firebase";
-import {UserManagerService} from "../../app/service/UserManagerService";
 
 @Component({
   selector: 'page-home',
@@ -15,7 +15,9 @@ export class HomePage {
   items: Observable<any[]>;
   auth = firebase.auth();
   database :AngularFireDatabase;
+  today;
   constructor(public navCtrl: NavController, db: AngularFireDatabase) {
+    this.today = new Date();
     this.database = db;
     this.items = this.database.list('/user').valueChanges();
 
@@ -46,5 +48,4 @@ export class HomePage {
   logout() {
 
   }
-
 }
