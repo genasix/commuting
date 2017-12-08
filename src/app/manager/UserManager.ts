@@ -1,4 +1,6 @@
 import {User} from '../model/User'
+
+import * as firebase from "firebase";
 import AuthProvider = firebase.auth.AuthProvider;
 
 export interface UserManager {
