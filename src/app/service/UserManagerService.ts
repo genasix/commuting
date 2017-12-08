@@ -2,12 +2,24 @@ import {UserManager} from "../manager/UserManager";
 import * as firebase from "firebase";
 import AuthProvider = firebase.auth.AuthProvider;
 import {User} from "../model/User";
-
+import {FirebaseListObservable, FirebaseObjectObservable} from "angularfire2/database-deprecated";
+import {AngularFireDatabase, AngularFireList, AngularFireObject} from "angularfire2/database";
+import {Injectable} from "@angular/core";
+import {Observable} from "rxjs/Observable";
+import {query} from "@angular/core/src/animation/dsl";
 
 export class UserManagerService implements UserManager {
 
+
+  users: AngularFireList<User[]>;
+  db :AngularFireDatabase;
+
+  constructor(db: AngularFireDatabase) {
+    this.db = db;
+  }
+
   createUser(id: string, pay: number): void {
-    console.log(`id: ${id}, pay: ${pay}`);
+    this.db.list("/user").push(new User(id,pay));
   }
 
   getUser(id: string): User {

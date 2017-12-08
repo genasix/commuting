@@ -14,14 +14,16 @@ export class HomePage {
 
   items: Observable<any[]>;
   auth = firebase.auth();
-
+  db :AngularFireDatabase;
   constructor(public navCtrl: NavController, db: AngularFireDatabase) {
-    this.items = db.list('/list').valueChanges();
+    this.items = db.list('/user').valueChanges();
+    this.db = db;
   }
 
   test() {
-    const userManagerService = new UserManagerService()
+    const userManagerService = new UserManagerService(this.db);
     userManagerService.createUser("shlee", 100)
+
   }
 
   login() {
