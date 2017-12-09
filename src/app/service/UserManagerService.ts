@@ -18,8 +18,20 @@ export class UserManagerService implements UserManager {
     this.db = db;
   }
 
+  clearUser(db: AngularFireDatabase):void {
+    this.db.list("/user").remove();
+  }
+
+  isUserExist(users : string,id: string) : boolean{
+    return [].every.call(JSON.parse(users),function (user) {
+      return user.id !=id;
+    });
+  }
+
   createUser(id: string, pay: number): void {
-    this.db.list("/user").push(new User(id,pay));
+    this.db.list('/user').valueChanges().subscribe(o => {if(this.isUserExist(JSON.stringify(o),id)) {
+      this.db.list("/user").push(new User(id, pay));
+    }})
   }
 
   getUser(id: string): User {

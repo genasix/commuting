@@ -14,15 +14,16 @@ export class HomePage {
 
   items: Observable<any[]>;
   auth = firebase.auth();
-  db :AngularFireDatabase;
+  database :AngularFireDatabase;
   constructor(public navCtrl: NavController, db: AngularFireDatabase) {
-    this.items = db.list('/user').valueChanges();
-    this.db = db;
+    this.database = db;
+    this.items = this.database.list('/user').valueChanges();
+
   }
 
   test() {
-    const userManagerService = new UserManagerService(this.db);
-    userManagerService.createUser("shlee", 100)
+    const userManagerService = new UserManagerService(this.database);
+    userManagerService.createUser("woori", 100)
 
   }
 
@@ -31,12 +32,16 @@ export class HomePage {
     this.auth.onAuthStateChanged(function (user) {
       if (user) {
         console.log("success", user);
+        console.log(typeof user);
+
+
       } else {
         this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
 
       }
     })
   }
+
 
   logout() {
 
