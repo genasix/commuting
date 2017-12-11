@@ -12,11 +12,11 @@ import { Login } from '../pages/login/login';
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-  
-  rootPage:any = Login;
+
+  rootPage:any = HomePage;
 
   pages: Array<{title: string, component: any}>;
-  
+
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     splashScreen.show();
     platform.ready().then(() => {
