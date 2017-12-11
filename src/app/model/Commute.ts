@@ -1,4 +1,4 @@
-export interface Commuting {
+export interface Commute {
   id: string
   day: Date
   go: Date
