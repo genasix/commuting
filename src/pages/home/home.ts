@@ -4,22 +4,24 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase';
 import { UserManagerService } from '../../app/service/UserManagerService';
-
+import * as moment from 'moment';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-
+  isWent : boolean;
   items: Observable<any[]>;
   auth = firebase.auth();
   database :AngularFireDatabase;
   today;
   constructor(public navCtrl: NavController, db: AngularFireDatabase) {
-    this.today = new Date();
+    moment.locale('ko');
+    this.today = moment().format('YYYY-MM-DD(ddd)');
     this.database = db;
     this.items = this.database.list('/user').valueChanges();
+    this.isWent = false;
 
   }
 
