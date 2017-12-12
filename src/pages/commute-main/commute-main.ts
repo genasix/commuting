@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import {AngularFireDatabase} from "angularfire2/database";
+import {CommuteManagerService} from "../../app/service/CommuteManagerService";
 
 /**
  * Generated class for the CommuteMain page.
@@ -12,8 +14,17 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'commute-main.html',
 })
 export class CommuteMain {
+  db :AngularFireDatabase;
+  go: string;
+  out: string;
+  overtime: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, db: AngularFireDatabase) {
+    let commuteManagerService = new CommuteManagerService(this.db);
+    let info = commuteManagerService.getTodayCommuteInfo(new Date());
+    this.go = info.go;
+    this.out = info.out;
+    this.overtime = info.overtime;
   }
 
   ionViewDidLoad() {
