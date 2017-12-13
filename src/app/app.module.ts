@@ -25,6 +25,7 @@ import { SettingGoTime } from '../pages/setting-go-time/setting-go-time';
 import { SettingOutTime } from '../pages/setting-out-time/setting-out-time';
 import { Login } from '../pages/login/login';
 import { NgCalendarModule } from 'ionic2-calendar/calendar.module';
+import { CommuteManagerService } from './service/CommuteManagerService';
 
 
 
@@ -53,7 +54,8 @@ import { NgCalendarModule } from 'ionic2-calendar/calendar.module';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    CommuteManagerService
   ]
 })
 export class AppModule {}
