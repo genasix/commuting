@@ -39,16 +39,16 @@ export class Login {
   }
 
   login() {
-    this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    // this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     this.auth.onAuthStateChanged(function (user) {
       if (user) {
         console.log("success", user);
-
+        this.navCtrl.setRoot(HomePage);  
       } else {
         this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
 
       }
-    })
+    }.bind(this));
   }
 
   logout() {
