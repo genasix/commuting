@@ -28,12 +28,12 @@ export class HomePage {
   }
 
   goCommute() {
-   if(this.service.goCommute("sanghoon", moment().format("HH:mm:ss"))) {
+    if(this.service.goCommute("sanghoon", moment().format("HH:mm:ss"))) {
      this.isWent = true;
    }
   }
   outCommute(){
-    this.service.outCommute("sanghoon", moment().format("HH:mm:ss"))
+    this.service.outCommute("sanghoon", moment().format("HH:mm:ss"));
   }
 
   removeAllForTest(){

@@ -94,6 +94,18 @@ export class CommuteManagerService implements CommuteManager {
   }
 
   getAllCommuteInfo(id:string){
-
+    let commutes = [];
+    this.db.database.ref('/commuting').once("value",function (snp) {
+      let snap = snp.val();
+      if(snap!=null){
+        [].forEach.call(Object.keys(snap),function (key) {
+          if(key){
+            let commute = new Commute(snap[key].id, snap[key].day, snap[key].go, snap[key].out, snap[key].overtime, snap[key].workingTime);
+            commutes.push(commute);
+          }
+        });
+      }
+    });
+    return commutes;
   }
 }
