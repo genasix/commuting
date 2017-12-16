@@ -9,5 +9,5 @@ export interface CommuteManager {
   deleteCommuting(id: string, day: Date): void
   getOverTime(id: string, from: Date, to: Date): OverTime[]
   getStatistics(id: string, from: Date, to: Date): Statistics
-  getTodayCommuteInfo(day: Date): Commute
+  getTodayCommuteInfo(id: string, day: Date): Commute
 }

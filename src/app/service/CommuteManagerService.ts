@@ -19,7 +19,7 @@ export class CommuteManagerService implements CommuteManager {
     this.db = db;
   }
 
-  getTodayCommuteInfo(day: Date): Commute {
+  getTodayCommuteInfo(id: string, day: Date): Commute {
     let today = moment().format(this.format);
     return new Commute('0',today,today,today,0,0);
 
