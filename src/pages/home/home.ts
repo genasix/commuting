@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase';
 import { UserManagerService } from '../../app/service/UserManagerService';
 import * as moment from 'moment';
+import {CommuteManagerService} from "../../app/service/CommuteManagerService";
 
 @Component({
   selector: 'page-home',
@@ -25,29 +26,9 @@ export class HomePage {
 
   }
 
-  test() {
-    const userManagerService = new UserManagerService(this.database);
-    userManagerService.createUser("woori", 100)
-
+  goCommute() {
+   let service = new CommuteManagerService(this.database);
+   service.goCommute("woori", moment().format("HH:mm:ss"))
   }
 
-  login() {
-    this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-    this.auth.onAuthStateChanged(function (user) {
-      if (user) {
-        console.log("success", user);
-        console.log(typeof user);
-
-
-      } else {
-        this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-
-      }
-    })
-  }
-
-
-  logout() {
-
-  }
 }

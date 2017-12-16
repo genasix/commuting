@@ -8,10 +8,10 @@ export class Commute {
     this.day = day;
     this.id = id;
   }
-  id: string
+  id: string;
   day: string;
-  go: string
-  out: string
-  overtime: number
+  go: string;
+  out: string;
+  overtime: number;
   workingTime: number
 }

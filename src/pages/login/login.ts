@@ -18,13 +18,18 @@ import { HomePage } from '../home/home';
 })
 export class Login {
   @ViewChild(Nav) nav: Nav;
-  
+
   items: Observable<any[]>;
   auth = firebase.auth();
   db :AngularFireDatabase;
+  id :string;
   constructor(public navCtrl: NavController, db: AngularFireDatabase) {
     // this.items = db.list('/user').valueChanges();
     this.db = db;
+  }
+
+  setId(id:string){
+    this.id = id;
   }
 
   test() {
@@ -38,6 +43,7 @@ export class Login {
     this.auth.onAuthStateChanged(function (user) {
       if (user) {
         console.log("success", user);
+
       } else {
         this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
 

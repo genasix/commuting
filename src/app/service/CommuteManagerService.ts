@@ -13,21 +13,45 @@ import { Injectable } from "@angular/core";
 export class CommuteManagerService implements CommuteManager {
   users: AngularFireList<User[]>;
   db :AngularFireDatabase;
-  format: string = 'YYYY-MM-DD(ddd) HH:mm:SS';
+  format: string = 'YYYY-MM-DD HH:mm:SS';
 
   constructor(db: AngularFireDatabase) {
     this.db = db;
+    this.db.list('/commuting').valueChanges().subscribe(o => {console.log(JSON.stringify(o))})
   }
 
-  getTodayCommuteInfo(id: string, day: Date): Commute {
+  isGoExist(commutes:string, id:string){
+    return [].every.call(JSON.parse(commutes),function (commute) {
+      return commute.id ==id && commute.day == moment().format("YYYY-MM-DD")
+    })
+  }
+
+  isCommuteExist(commutes:string, id:string){
+    [].filter.call(commutes,function (commute) {
+
+    });
+    this.db.list('/commuting').valueChanges().subscribe(o => {console.log(JSON.stringify(o))})
+  }
+
+  getTodayCommuteInfo(id: string, day: string): Commute {
     let today = moment().format(this.format);
     return new Commute('0',today,today,today,0,0);
 
   }
-  createCommuting(id: string, go: Date, out: Date): void{
-    throw new Error("Method not implemented.");
+
+  outCommute(id:string, out:string){
+    this.db.list('/commuting').valueChanges().subscribe(o => {if(this.isCommuteExist(JSON.stringify(o),id)) {
+      //todo update out..
+    }})
 
   }
+  goCommute(id:string, go:string){
+    let today : string = moment().format("YYYY-MM-DD");
+    this.db.list("/commuting").valueChanges().subscribe(o=>{if(!this.isGoExist(JSON.stringify(o),id)){
+      this.db.list("/commuting").push(new Commute(id, moment().format("YYYY-MM-DD"),go,"",0,0));
+    }})
+  }
+
   getCommuting(id: string, from: Date, to: Date): Date{
     throw new Error("Method not implemented.");
 
