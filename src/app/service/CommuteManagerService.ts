@@ -16,7 +16,6 @@ export class CommuteManagerService implements CommuteManager {
   format: string = 'YYYY-MM-DD HH:mm:SS';
   commuteFlag:boolean = false;
   userKey: string;
-  isOut :boolean = false;
 
   constructor(db: AngularFireDatabase) {
     this.db = db;
@@ -43,11 +42,8 @@ export class CommuteManagerService implements CommuteManager {
   }
 
   outCommute(id:string, out:string){
-    let key = this.db.list('/commuting').update(this.userKey,{out:out});
-    if(key){
-      this.isOut = true;
-    }
-    return this.isOut;
+    this.db.list('/commuting').update(this.userKey,{out:out});
+    return true;
   }
   removeAllForTest(){
     this.db.list("/commuting").remove();
