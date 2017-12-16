@@ -17,18 +17,28 @@ export class HomePage {
   auth = firebase.auth();
   database :AngularFireDatabase;
   today;
+  service :CommuteManagerService;
   constructor(public navCtrl: NavController, db: AngularFireDatabase) {
     moment.locale('ko');
     this.today = moment().format('YYYY-MM-DD(ddd)');
     this.database = db;
     this.items = this.database.list('/user').valueChanges();
     this.isWent = false;
-
+    this.service = new CommuteManagerService(this.database);
   }
 
   goCommute() {
-   let service = new CommuteManagerService(this.database);
-   service.goCommute("woori", moment().format("HH:mm:ss"))
+   if(this.service.goCommute("sanghoon", moment().format("HH:mm:ss"))) {
+     this.isWent = true;
+   }
   }
+  outCommute(){
+    this.service.outCommute("sanghoon", moment().format("HH:mm:ss"))
+  }
+
+  removeAllForTest(){
+    this.service.removeAllForTest()
+  }
+
 
 }

@@ -14,10 +14,12 @@ export class CommuteManagerService implements CommuteManager {
   users: AngularFireList<User[]>;
   db :AngularFireDatabase;
   format: string = 'YYYY-MM-DD HH:mm:SS';
+  commuteFlag:boolean = false;
+  userKey: string;
 
   constructor(db: AngularFireDatabase) {
     this.db = db;
-    this.db.list('/commuting').valueChanges().subscribe(o => {console.log(JSON.stringify(o))})
+    // this.db.list('/commuting').valueChanges().subscribe(o => {console.log(JSON.stringify(o))})
   }
 
   isGoExist(commutes:string, id:string){
@@ -40,16 +42,29 @@ export class CommuteManagerService implements CommuteManager {
   }
 
   outCommute(id:string, out:string){
-    this.db.list('/commuting').valueChanges().subscribe(o => {if(this.isCommuteExist(JSON.stringify(o),id)) {
-      //todo update out..
-    }})
+    console.log(this.key);
+    let test = this.db.database.ref('/commuting').on("value",function (snp) {
+      snp.val()
+    });
+    this.db.list('/commuting').valueChanges().filter(o => {
+      let data = JSON.parse(JSON.stringify(o));
+      return data[0].id == id && data[0].day == moment().format("YYYY-MM-DD")
+    }).subscribe(o => {
+      let data = JSON.parse(JSON.stringify(o))[0];
+      data.out = out;
+      this.db.list('/commuting').update(this.key,data);
+    })
 
+  }
+  removeAllForTest(){
+    this.db.list("/commuting").remove();
   }
   goCommute(id:string, go:string){
     let today : string = moment().format("YYYY-MM-DD");
-    this.db.list("/commuting").valueChanges().subscribe(o=>{if(!this.isGoExist(JSON.stringify(o),id)){
-      this.db.list("/commuting").push(new Commute(id, moment().format("YYYY-MM-DD"),go,"",0,0));
-    }})
+    this.key = this.db.list("/commuting").push(new Commute(id, moment().format("YYYY-MM-DD"),go,"",0,0)).key;
+    this.commuteFlag = true;
+    return this.commuteFlag;
+
   }
 
   getCommuting(id: string, from: Date, to: Date): Date{

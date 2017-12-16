@@ -9,5 +9,7 @@
 
 <ion-content padding>
   <h1 text-center>{{ today }}</h1>
-  <button ion-button block (click)="goCommute()">출근</button>
+  <button *ngIf="!isWent" ion-button block (click)="goCommute()">출근</button>
+  <button *ngIf="isWent" ion-button block (click)="outCommute()">퇴근</button>
+  <button ion-button block (click)="removeAllForTest()">ㄲㅈ</button>
 </ion-content>
