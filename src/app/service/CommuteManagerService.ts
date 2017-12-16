@@ -16,6 +16,7 @@ export class CommuteManagerService implements CommuteManager {
   format: string = 'YYYY-MM-DD HH:mm:SS';
   commuteFlag:boolean = false;
   userKey: string;
+  isOut :boolean = false;
 
   constructor(db: AngularFireDatabase) {
     this.db = db;
@@ -43,18 +44,19 @@ export class CommuteManagerService implements CommuteManager {
 
   outCommute(id:string, out:string){
     console.log(this.userKey);
-    let test = this.db.database.ref('/commuting').on("value",function (snp) {
-      snp.val()
-    });
     this.db.list('/commuting').valueChanges().filter(o => {
       let data = JSON.parse(JSON.stringify(o));
       return data[0].id == id && data[0].day == moment().format("YYYY-MM-DD")
     }).subscribe(o => {
       let data = JSON.parse(JSON.stringify(o))[0];
-      data.out = out;
-      this.db.list('/commuting').update(this.userKey,data);
-    })
-
+      if(data[0]!=null){
+        data.out = out;
+        let test = this.db.list('/commuting').update(this.userKey,data);
+        console.log(test);
+        this.isOut = true;
+      }
+    });
+    return this.isOut;
   }
   removeAllForTest(){
     this.db.list("/commuting").remove();
