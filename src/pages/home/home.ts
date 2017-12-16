@@ -39,10 +39,4 @@ export class HomePage {
       this.isOut = true;
     }
   }
-
-  removeAllForTest(){
-    this.service.removeAllForTest()
-  }
-
-
 }
