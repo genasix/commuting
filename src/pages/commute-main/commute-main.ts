@@ -17,8 +17,7 @@ import * as moment from 'moment';
 export class CommuteMain {
   db: AngularFireDatabase;
   dateFormat: string;
-  heroes: Array;
-
+  commutes;
   constructor(public navCtrl: NavController, public navParams: NavParams, db: AngularFireDatabase) {
     this.db = db;
     let commuteManagerService = new CommuteManagerService(this.db);

@@ -13,6 +13,7 @@ import {CommuteManagerService} from "../../app/service/CommuteManagerService";
 })
 export class HomePage {
   isWent : boolean;
+  isOut : boolean;
   items: Observable<any[]>;
   auth = firebase.auth();
   database :AngularFireDatabase;
@@ -24,6 +25,7 @@ export class HomePage {
     this.database = db;
     this.items = this.database.list('/user').valueChanges();
     this.isWent = false;
+    this.isOut = false;
     this.service = new CommuteManagerService(this.database);
   }
 
@@ -33,7 +35,9 @@ export class HomePage {
    }
   }
   outCommute(){
-    this.service.outCommute("sanghoon", moment().format("HH:mm:ss"));
+    if(this.service.outCommute("sanghoon", moment().format("HH:mm:ss"))) {
+      this.isOut = true;
+    }
   }
 
   removeAllForTest(){
