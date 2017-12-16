@@ -48,10 +48,6 @@ export class CommuteManagerService implements CommuteManager {
     return true;
   }
 
-  removeAllForTest() {
-    this.db.list("/commuting").remove();
-  }
-
   goCommute(id: string, go: string) {
     let today: string = moment().format("YYYY-MM-DD");
     this.userKey = this.db.list("/commuting").push(new Commute(id, moment().format("YYYY-MM-DD"), go, "", 0, 0)).key;
