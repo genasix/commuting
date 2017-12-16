@@ -17,7 +17,7 @@ export class CommuteMain {
   db :AngularFireDatabase;
   go: string;
   out: string;
-  overtime: string;
+  overtime: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, db: AngularFireDatabase) {
     let commuteManagerService = new CommuteManagerService(this.db);

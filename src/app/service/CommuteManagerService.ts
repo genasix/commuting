@@ -18,38 +18,31 @@ export class CommuteManagerService implements CommuteManager {
   constructor(db: AngularFireDatabase) {
     this.db = db;
   }
-  
+
   getTodayCommuteInfo(day: Date): Commute {
     let today = moment().format(this.format);
-    return {
-      id: '0',
-      day: today,
-      go: today,
-      out: today,
-      overtime: today,
-      workingTime: today
-    }
-    
+    return new Commute('0',today,today,today,0,0);
+
   }
   createCommuting(id: string, go: Date, out: Date): void{
     throw new Error("Method not implemented.");
-    
+
   }
   getCommuting(id: string, from: Date, to: Date): Date{
     throw new Error("Method not implemented.");
-    
+
   }
   updateCommuting(id: string, go: Date, out: Date, day: Date): void{
     throw new Error("Method not implemented.");
-    
+
   }
   deleteCommuting(id: string, day: Date): void{
     throw new Error("Method not implemented.");
-    
+
   }
   getOverTime(id: string, from: Date, to: Date): OverTime[]{
     throw new Error("Method not implemented.");
-    
+
   }
   getStatistics(id: string, from: Date, to: Date): Statistics{
     return {
@@ -58,6 +51,6 @@ export class CommuteManagerService implements CommuteManager {
       avg: 50,
       total: 150,
       standardDeviation: 0
-    }    
+    }
   }
 }
