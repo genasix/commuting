@@ -42,7 +42,7 @@ export class CommuteManagerService implements CommuteManager {
   }
 
   outCommute(id:string, out:string){
-    console.log(this.key);
+    console.log(this.userKey);
     let test = this.db.database.ref('/commuting').on("value",function (snp) {
       snp.val()
     });
@@ -52,7 +52,7 @@ export class CommuteManagerService implements CommuteManager {
     }).subscribe(o => {
       let data = JSON.parse(JSON.stringify(o))[0];
       data.out = out;
-      this.db.list('/commuting').update(this.key,data);
+      this.db.list('/commuting').update(this.userKey,data);
     })
 
   }
@@ -61,7 +61,7 @@ export class CommuteManagerService implements CommuteManager {
   }
   goCommute(id:string, go:string){
     let today : string = moment().format("YYYY-MM-DD");
-    this.key = this.db.list("/commuting").push(new Commute(id, moment().format("YYYY-MM-DD"),go,"",0,0)).key;
+    this.userKey = this.db.list("/commuting").push(new Commute(id, moment().format("YYYY-MM-DD"),go,"",0,0)).key;
     this.commuteFlag = true;
     return this.commuteFlag;
 
