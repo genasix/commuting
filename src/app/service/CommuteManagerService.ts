@@ -92,4 +92,8 @@ export class CommuteManagerService implements CommuteManager {
       standardDeviation: 0
     }
   }
+
+  getAllCommuteInfo(id:string){
+
+  }
 }

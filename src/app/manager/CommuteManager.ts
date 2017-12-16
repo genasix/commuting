@@ -11,4 +11,5 @@ export interface CommuteManager {
   getOverTime(id: string, from: Date, to: Date): OverTime[]
   getStatistics(id: string, from: Date, to: Date): Statistics
   getTodayCommuteInfo(id: string, day: string): Commute
+  getAllCommuteInfo(id:string);
 }
